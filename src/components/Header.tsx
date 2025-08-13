@@ -44,16 +44,7 @@ const Header = () => {
           <a href="#products" className="text-foreground hover:text-primary transition-colors">
             Products
           </a>
-          <a 
-            href="#customizer" 
-            className="text-foreground hover:text-primary transition-colors font-medium"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('customizer')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            3D Customizer
-          </a>
+        
           <a href="#contact" className="text-foreground hover:text-primary transition-colors">
             Contact
           </a>
