@@ -1,9 +1,23 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, ShoppingCart, Phone } from "lucide-react";
+import { useState } from "react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navigationItems = [
+    { label: "Home", href: "#home" },
+    { label: "Services", href: "#services" },
+    { label: "Products", href: "#products" },
+    { label: "Contact", href: "#contact" }
+  ];
+
+  const handleNavClick = () => {
+    setIsOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-soft">
@@ -30,6 +44,16 @@ const Header = () => {
           <a href="#products" className="text-foreground hover:text-primary transition-colors">
             Products
           </a>
+          <a 
+            href="#customizer" 
+            className="text-foreground hover:text-primary transition-colors font-medium"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('customizer')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            3D Customizer
+          </a>
           <a href="#contact" className="text-foreground hover:text-primary transition-colors">
             Contact
           </a>
@@ -53,52 +77,76 @@ const Header = () => {
             Get Quote
           </Button>
           
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="w-5 h-5" />
-          </Button>
+          {/* Mobile Menu */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="w-5 h-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-80 sm:w-96">
+              {/* Accessibility Title (Hidden) */}
+              <VisuallyHidden>
+                <DialogTitle>Menu</DialogTitle>
+              </VisuallyHidden>
+
+              <div className="flex flex-col h-full">
+                {/* Mobile Logo */}
+                <div className="flex items-center space-x-2 pb-6 border-b border-border">
+                  <div className="w-8 h-8 bg-gradient-ocean rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">BE</span>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-foreground">BlueEarth</h2>
+                    <p className="text-xs text-muted-foreground -mt-1">Pure Water for a Pure Planet</p>
+                  </div>
+                </div>
+
+                {/* Mobile Navigation */}
+                <nav className="flex flex-col space-y-6 pt-8 flex-1">
+                  {navigationItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="text-lg text-foreground hover:text-primary transition-colors py-2"
+                      onClick={item.onClick || handleNavClick}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+
+                {/* Mobile Actions */}
+                <div className="pt-6 border-t border-border space-y-4">
+                  <Button 
+                    variant="pure" 
+                    size="lg"
+                    className="w-full"
+                    onClick={() => {
+                      window.open('tel:9649049912', '_self');
+                      setIsOpen(false);
+                    }}
+                  >
+                    <Phone className="w-4 h-4 mr-2" />
+                    Call Us: 9649049912
+                  </Button>
+                  <Button 
+                    variant="ocean" 
+                    size="lg"
+                    className="w-full"
+                    onClick={() => {
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      setIsOpen(false);
+                    }}
+                  >
+                    Get Quote
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex justify-end md:hidden">
-          <div className="w-64 bg-background h-full shadow-lg p-6 flex flex-col">
-            <div className="flex justify-between items-center mb-8">
-              <span className="text-xl font-bold text-foreground">Menu</span>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-full hover:bg-muted transition"
-                aria-label="Close menu"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <nav className="flex flex-col gap-4">
-              <a href="#home" className="text-foreground hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Home
-              </a>
-              <a href="#services" className="text-foreground hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Services
-              </a>
-              <a href="#products" className="text-foreground hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Products
-              </a>
-              <a href="#contact" className="text-foreground hover:text-primary transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Contact
-              </a>
-            </nav>
-          </div>
-          {/* Click outside to close */}
-          <div className="flex-1" onClick={() => setMobileMenuOpen(false)} />
-        </div>
-      )}
     </header>
   );
 };

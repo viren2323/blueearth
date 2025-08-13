@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star, Check } from 'lucide-react';
@@ -11,7 +10,6 @@ import weddingCollectionImg from "../assets/wedding-collection.png";
 import blueEarthSignatureImg from "../assets/blueearth-signature.png";
 
 const Products = () => {
-  
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const bottles = [
@@ -33,7 +31,7 @@ const Products = () => {
       name: "Corporate Summit",
       features: ["Professional Branding", "Conference Ready", "Business Quality", "Corporate Identity"],
       popular: false,
-      image:  corporateSummitImg,
+      image: corporateSummitImg,
       description: "Professional bottles designed for business events, conferences, and corporate branding."
     },
     {
@@ -66,7 +64,7 @@ const Products = () => {
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => 
+    setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? bottles.length - 1 : prevIndex - 1
     );
   };
@@ -79,7 +77,7 @@ const Products = () => {
     <section id="products" className="py-20 bg-background">
       <div className="mx-auto px-6 max-w-7xl">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -125,13 +123,13 @@ const Products = () => {
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: 0.2, duration: 0.5 }}
-                      className="max-w-full max-h-full object-contain"
+                      className="carousel-image w-full h-full object-cover md:object-contain md:p-4"
                     />
                   </div>
 
                   {/* Product Info Overlay */}
                   <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-strong">
-                    <motion.div 
+                    <motion.div
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.3, duration: 0.5 }}
