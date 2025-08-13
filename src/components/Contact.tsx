@@ -10,7 +10,6 @@ import {
   MessageSquare, 
   Phone, 
   Mail, 
-  MapPin, 
   Clock,
   Send
 } from "lucide-react";
@@ -37,14 +36,17 @@ const Contact = () => {
     glass: 95
   };
 
+  // ✅ FIXED: Instant price update when bottle type or quantity changes
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
-    // Calculate estimated price
-    if ((field === 'bottleType' || field === 'quantity') && formData.bottleType && formData.quantity) {
-      const price = bottlePrices[formData.bottleType as keyof typeof bottlePrices] || 0;
-      const qty = parseInt(field === 'quantity' ? value : formData.quantity) || 0;
-      setEstimatedPrice(price * qty);
+    const updatedData = { ...formData, [field]: value };
+    setFormData(updatedData);
+
+    if (updatedData.bottleType && updatedData.quantity) {
+      const pricePerBottle = bottlePrices[updatedData.bottleType as keyof typeof bottlePrices] || 0;
+      const qty = parseInt(updatedData.quantity) || 0;
+      setEstimatedPrice(pricePerBottle * qty);
+    } else {
+      setEstimatedPrice(0);
     }
   };
 
@@ -76,7 +78,6 @@ const Contact = () => {
         description: "We'll get back to you within 24 hours.",
       });
 
-      // Reset form
       setFormData({
         name: "",
         phone: "",
@@ -290,7 +291,9 @@ const Contact = () => {
                     <Clock className="w-4 h-4 mr-2 text-primary" />
                     Estimated Price
                   </h4>
-                  <p className="text-lg font-bold text-primary">₹{estimatedPrice.toLocaleString()}</p>
+                  <p className="text-lg font-bold text-primary transition-all duration-300">
+                    ₹{estimatedPrice.toLocaleString()}
+                  </p>
                   <p className="text-sm text-muted-foreground">
                     Price will be calculated based on your selections
                   </p>
