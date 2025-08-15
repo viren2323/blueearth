@@ -66,7 +66,7 @@ const Contact = () => {
         body: {
           ...formData,
           estimatedPrice,
-          adminEmail: 'virusikar5600@gmail.com',
+          adminEmail: 'theblueearthorders@gmail.com',
           whatsappNumber: '9649049912'
         }
       });
@@ -163,7 +163,7 @@ const Contact = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">virusikar5600@gmail.com</p>
+                <p className="text-muted-foreground">theblueearthorders@gmail.com</p>
               </CardContent>
             </Card>
           </div>

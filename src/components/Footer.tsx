@@ -66,7 +66,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <Mail className="w-4 h-4 text-aqua" />
-                <span className="text-white/70">virusikar5600@gmail.com</span>
+                <span className="text-white/70">theblueearthorders@gmail.com</span>
               </div>
               <div className="flex items-start space-x-2 text-sm">
                 <MapPin className="w-4 h-4 text-aqua mt-0.5" />
